@@ -1,0 +1,25 @@
+.page-container {
+  padding: 32px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+}
+
+.btn-primary {
+  background: #007bff;
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: none;
+}
