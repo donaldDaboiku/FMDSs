@@ -11,6 +11,7 @@
     "dev:frontend": "npm --prefix frontend start",
     "check": "npm --prefix backend run check",
     "docker:up": "docker compose up -d --build",
+    "docker:up:atlas": "docker compose -f docker-compose.yml -f docker-compose.atlas.yml up -d --build",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f app"
   }
