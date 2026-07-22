@@ -1,6 +1,6 @@
 // context/SettingsContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import axios from 'axios';
+import api, { authHeaders } from '../lib/api';
 
 const SettingsContext = createContext();
 
@@ -47,10 +47,8 @@ export const SettingsProvider = ({ children }) => {
   const loadSettings = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      
-      const response = await axios.get('http://localhost:5000/api/settings', {
-        headers: { Authorization: `Bearer ${token}` }
+      const response = await api.get('/settings', {
+        headers: authHeaders()
       });
       
       if (response.data) {
@@ -72,12 +70,11 @@ export const SettingsProvider = ({ children }) => {
     try {
       setSaveStatus('saving');
       
-      const token = localStorage.getItem('token');
       const updatedSettings = { ...settings, ...newSettings };
 
       // Save to backend
-      const response = await axios.post('http://localhost:5000/api/settings', updatedSettings, {
-        headers: { Authorization: `Bearer ${token}` }
+      const response = await api.post('/settings', updatedSettings, {
+        headers: authHeaders()
       });
 
       // Update state with response from server
@@ -133,8 +130,8 @@ export const SettingsProvider = ({ children }) => {
     // Also reset on backend
     const token = localStorage.getItem('token');
     if (token) {
-      axios.post('http://localhost:5000/api/settings', defaultSettings, {
-        headers: { Authorization: `Bearer ${token}` }
+      api.post('/settings', defaultSettings, {
+        headers: authHeaders()
       }).catch(console.error);
     }
   };

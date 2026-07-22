@@ -6,7 +6,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }) {
   const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   if (!token) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   if (requireAdmin && user.role !== 'admin') {

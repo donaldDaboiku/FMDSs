@@ -16,7 +16,7 @@ import {
   Alert,
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
-import axios from 'axios';
+import api, { authHeaders } from '../lib/api';
 
 export default function UserManagement() {
   const [users, setUsers] = useState([]);
@@ -27,9 +27,8 @@ export default function UserManagement() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:5000/api/admin/users', {
-          headers: { Authorization: `Bearer ${token}` }
+        const response = await api.get('/users', {
+          headers: authHeaders()
         });
         setUsers(response.data);
       } catch (err) {
@@ -51,9 +50,8 @@ export default function UserManagement() {
 
   const handleDeleteUser = async (userId) => {
     try {
-      const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` }
+      await api.delete(`/users/${userId}`, {
+        headers: authHeaders()
       });
       setUsers(users.filter(user => user._id !== userId));
     } catch (err) {

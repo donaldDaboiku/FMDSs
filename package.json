@@ -1,0 +1,17 @@
+{
+  "name": "fmds",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fashion Management & Design System",
+  "scripts": {
+    "install:all": "npm --prefix backend ci && npm --prefix frontend ci",
+    "build": "npm --prefix frontend run build",
+    "start": "npm --prefix backend start",
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend start",
+    "check": "npm --prefix backend run check",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f app"
+  }
+}

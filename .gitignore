@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Builds / caches
+frontend/build/
+**/coverage/
+.cache/
+dist/
+
+# Logs / OS
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Local DB / uploads
+backend/database.sqlite
+backend/uploads/*
+!backend/uploads/.gitkeep

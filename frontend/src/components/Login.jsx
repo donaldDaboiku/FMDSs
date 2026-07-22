@@ -12,7 +12,7 @@ import {
   Paper,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../lib/api';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ export default function Login() {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', formData);
+      const response = await api.post('/auth/login', formData);
       
       // Save token to localStorage
       localStorage.setItem('token', response.data.token);

@@ -1,10 +1,10 @@
 // Updated Designs.jsx
 import { useEffect, useState } from "react";
-import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import Loader from "../components/Loader";
 import DashboardLayout from "../layout/DashboardLayout";
 import DesignForm from "../components/DesignForm"; // Add this import
+import api, { authHeaders } from "../lib/api";
 import {
   Box,
   Card,
@@ -30,9 +30,7 @@ export default function Designs() {
 
   const fetchDesigns = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const headers = { Authorization: `Bearer ${token}` };
-      const res = await axios.get("http://localhost:5000/designs", { headers });
+      const res = await api.get("/designs", { headers: authHeaders() });
       setDesigns(res.data);
     } catch (err) {
       console.error(err);

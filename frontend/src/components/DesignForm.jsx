@@ -1,5 +1,6 @@
 // components/DesignForm.jsx
 import { useState } from "react";
+import api, { authHeaders } from "../lib/api";
 import {
   Dialog,
   DialogTitle,
@@ -37,36 +38,19 @@ export default function DesignForm({ open, onClose, onDesignCreated }) {
     setError("");
 
     try {
-      const token = localStorage.getItem("token");
-      console.log("Sending request with data:", form)
-      const response = await fetch("http://localhost:5000/api/designs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(form)
+      const response = await api.post("/designs", form, {
+        headers: authHeaders()
       });
-      console.log("Response status:", response.status);
 
-      // Check if response has JSON content
-      const contentType = response.headers.get("content-type");
-      if(!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        console.log('Non-JSON response:', text.substring(0, 200));
-        throw new Error(`Server returned ${response.status}: ${text}`)};
-      
-      const data = await response.json();
-
-      if (response.ok) {
-        onDesignCreated(data);
+      if (response.data) {
+        onDesignCreated(response.data);
         onClose();
         setForm({ name: "", category: "", fabric: "", color: "", description: "" });
       } else {
-        setError(data.error || "Failed to create design");
+        setError("Failed to create design");
       }
     } catch (err) {
-      setError("Network error: " + err.message);
+      setError(err.response?.data?.error || "Network error: " + err.message);
     } finally {
       setLoading(false);
     }
